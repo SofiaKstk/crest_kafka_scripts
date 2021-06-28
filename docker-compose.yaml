@@ -3,4 +3,4 @@ version: '3.9'
 services:
   threat-assesment:
     build: .
-    command: "python3 consumer_obj.py && python3 consumer_face.py && python3 consumer_concObj.py"
+    command: "python consumer_obj.py && python consumer_face.py && python consumer_concObj.py"
