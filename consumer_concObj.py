@@ -12,7 +12,8 @@ topic_concObj = "TOP10_02_COD_ALERT"
 
 producer = KafkaProducer(bootstrap_servers='172.31.29.6:9092')
 
-consumer_concObj = KafkaConsumer(topic_concObj, bootstrap_servers ='172.31.29.6:9092')
+consumer_concObj = KafkaConsumer(topic_concObj, bootstrap_servers ='172.31.29.6:9092', auto_offset_reset='earliest')
+#consumer_concObj = KafkaConsumer(topic_concObj, bootstrap_servers ='172.31.29.6:9092')
 
 for message in consumer_concObj:
     message = message.value
@@ -28,4 +29,5 @@ for message in consumer_concObj:
     else:
         mess["body"]["threatLevel"] = "high"
     # print("conc " + mess["body"]["threatLevel"])
+    print("Alert level updated.")
     producer.send(topic_concObj, json.dumps(mess).encode('utf-8'))

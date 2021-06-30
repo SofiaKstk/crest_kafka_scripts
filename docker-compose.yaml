@@ -1,6 +1,12 @@
 version: '3.9'
 
 services:
-  threat-assesment:
+  threat-assesment-1:
     build: .
-    command: "python consumer_obj.py && python consumer_face.py && python consumer_concObj.py"
+    command: bash -c "python consumer_face.py"
+  threat-assesment-2:
+    build: .
+    command: bash -c "python consumer_obj.py"
+  threat-assesment-3:
+    build: .
+    command: bash -c "python consumer_concObj.py"

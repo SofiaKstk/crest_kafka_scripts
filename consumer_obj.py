@@ -12,7 +12,8 @@ topic_obj = "TOP22_02_OBJECT_RECO_DONE"
 
 producer = KafkaProducer(bootstrap_servers='172.31.29.6:9092')
 
-consumer_obj = KafkaConsumer(topic_obj, bootstrap_servers ='172.31.29.6:9092')
+consumer_obj = KafkaConsumer(topic_obj, bootstrap_servers ='172.31.29.6:9092', auto_offset_reset='earliest')
+# consumer_obj = KafkaConsumer(topic_obj, bootstrap_servers ='172.31.29.6:9092')
 
 
 for message in consumer_obj:
@@ -29,4 +30,5 @@ for message in consumer_obj:
     else:
         mess["body"]["threatLevel"] = "high"
     # print("obj " + mess["body"]["threatLevel"])
+    print("Alert level updated.")
     producer.send(topic_obj, json.dumps(mess).encode('utf-8'))

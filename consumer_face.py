@@ -12,14 +12,16 @@ topic_face = "TOP22_05_FACE_RECO_DONE"
 
 producer = KafkaProducer(bootstrap_servers='172.31.29.6:9092')
 
-consumer_face = KafkaConsumer(topic_face, bootstrap_servers ='172.31.29.6:9092')
+consumer_face = KafkaConsumer(topic_face, bootstrap_servers ='172.31.29.6:9092', auto_offset_reset='earliest')
+# consumer_face = KafkaConsumer(topic_face, bootstrap_servers ='172.31.29.6:9092')
 
 for message in consumer_face:
     message = message.value
     mess = json.loads(message)
+    print(mess["body"])
     if mess["header"]["sender"] == "UoA":
         continue
-
+    
     mess["header"]["source"] = "UoA Threat Assessment module"
     mess["header"]["sender"] = "UoA"
 
@@ -30,4 +32,5 @@ for message in consumer_face:
     else:
         mess["body"]["level"] = "high"
     # print("fr " + mess["body"]["level"])
+    print("Alert level updated.")
     producer.send(topic_face, json.dumps(mess).encode('utf-8'))
